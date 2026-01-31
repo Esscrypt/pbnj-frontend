@@ -2,76 +2,82 @@
 
 This guide is based on the [Peanut Butter AND JAM](https://github.com/Esscrypt/pbnj) (PBJ) implementation of the JAM protocol. Read the [Gray Paper](https://graypaper.com/) for the authoritative specification.
 
+**Note:** The PBJ source repository is currently **private** for the duration of the JAM contest. You do not need repo access to get started: use the **Docker image** or **pre-built binaries** from the links below. Source and build-from-source instructions will be available when the repo is public.
+
 ---
 
-## Quick Start
+## Running the Docker container
+
+Use the PBJ fuzzer-target Docker image to run the node in a container without building from source.
 
 ### Prerequisites
 
-1. **Install Dependencies**:
+- **Docker** installed and running ([Install Docker](https://docs.docker.com/get-docker/))
+- A writable directory for the Unix socket (e.g. `/tmp`)
 
-   ```bash
-   bun install
-   ```
+### Pull and run
 
-2. **Initialize Submodules**:
+```bash
+# Pull the image
+docker pull shimonchick/pbnjam-fuzzer-target:latest
 
-   ```bash
-   git submodule init
-   git submodule update
-   ```
+# Run with a test socket (mount /tmp so the socket can be shared)
+docker run --rm -v /tmp:/tmp shimonchick/pbnjam-fuzzer-target:latest --socket /tmp/jam_test.sock --spec tiny
+```
 
-3. **Verify Gray Paper Access**:
+You should see the target listening on the socket. Press `Ctrl+C` to stop.
 
-   ```bash
-   ls submodules/graypaper/text/safrole.tex  # Should exist
-   ls submodules/jamtestvectors/stf/safrole/ # Should exist
-   ```
+### Custom socket path
+
+```bash
+SOCKET_PATH="/tmp/my_socket.sock"
+
+docker run --rm \
+  -v /tmp:/tmp \
+  shimonchick/pbnjam-fuzzer-target:latest \
+  bun run infra/node/fuzzer-target.ts --socket "$SOCKET_PATH" --spec tiny
+```
+
+### Parameters
+
+- **`--socket <path>`**: Unix domain socket path for fuzzer communication
+- **`--spec tiny`**: Chain specification (`tiny` or `full`)
+- **`-v /tmp:/tmp`**: Mounts the host directory so the socket is shared; use a path that exists on your machine
+
+### Troubleshooting
+
+- **Image not found**: Run `docker pull shimonchick/pbnjam-fuzzer-target:latest`. (Building from source requires access to the PBJ repo, which is currently private.)
+- **Socket permission errors**: Run with your user: `docker run --rm -v /tmp:/tmp --user $(id -u):$(id -g) shimonchick/pbnjam-fuzzer-target:latest ...`
 
 ---
 
-## Running the Node
+## Download and run the binary
+
+Pre-built **fuzzer target** binaries are published on GitHub Releases. **Linux (x64) only** for now.
+
+Releases: [https://github.com/Esscrypt/pbnj-fuzzer-releases/releases](https://github.com/Esscrypt/pbnj-fuzzer-releases/releases)
+
+### Prerequisites
+
+- **Linux (x64)** (macOS/Windows binaries may be added later)
+- **gunzip** (standard on Linux)
+
+### Run the fuzzer target
+
+1. Download `fuzzer-target.gz` from the [latest release](https://github.com/Esscrypt/pbnj-fuzzer-releases/releases).
+2. Decompress, make executable, and run:
 
 ```bash
-bun run ./infra/node/services/main-service.ts --validator-index 0 --telemetry 127.0.0.1:9000 --chain config/spec-tiny.json
+gunzip -c fuzzer-target.gz > fuzzer-target && chmod +x fuzzer-target && ./fuzzer-target --socket /tmp/jam_target.sock --spec tiny
 ```
 
-## Running with RPC Server
-
-```bash
-bun run ./apis/rpc-server/src/index.ts --validator-index 0 --telemetry 127.0.0.1:9000 --chain config/spec-tiny.json | bunx pino-pretty
-```
-
-## Running Polkajam
-
-```bash
-# if not there already
-cd submodules/polkajam
-
-./polkajam --chain dev run --telemetry tart-backend:9000 --dev-validator 0 --temp
-```
-
----
-
-## Development Workflow
-
-1. **Read the Gray Paper**: Always consult the relevant Gray Paper sections before implementing.
-2. **Use Test Vectors**: Validate your implementation against official test vectors.
-3. **Follow Implementation Guide**: See the JAM Implementation Guide in the repo.
-4. **Adhere to Rules**: Follow Gray Paper Adherence Rules.
+Use your own socket path and `--spec tiny` or `--spec full` as needed. The target will listen on the socket until you stop it (`Ctrl+C`).
 
 ---
 
 ## Key Resources
 
-### Test Vectors
-
-| Component       | Directory                    | Description        |
-| --------------- | ---------------------------- | ------------------ |
-| **Safrole**     | `jamtestvectors/stf/safrole/` | Consensus tests  |
-| **PVM**         | `jamtestvectors/stf/pvm/`     | Virtual machine tests |
-| **Erasure Coding** | `jamtestvectors/erasure/`  | Data availability tests |
-| **Codec**       | `jamtestvectors/codec/`       | Serialization tests |
+When the PBJ repo is public, it will include test vectors for Safrole, PVM, erasure coding, and codec, plus build and run-from-source instructions. Until then, use Docker or the binaries above.
 
 ---
 
@@ -88,22 +94,12 @@ The [Bandersnatch VRF](https://github.com/Esscrypt/bandersnatch-vrf) package pro
 - **Repository & docs**: [https://github.com/Esscrypt/bandersnatch-vrf](https://github.com/Esscrypt/bandersnatch-vrf)
 - **npm**: [@pbnjam/bandersnatch-vrf](https://www.npmjs.com/package/@pbnjam/bandersnatch-vrf)
 
-API documentation (TypeDoc) can be generated from the package:
-
-```bash
-cd packages/bandersnatch-vrf
-bun run docs
-```
-
-Output is written to the `docs/` directory in the package.
-
 ---
 
 ## Getting Help
 
 - **Gray Paper**: [https://graypaper.com/](https://graypaper.com/)
 - **Community Docs**: [https://docs.jamcha.in/](https://docs.jamcha.in/)
-- **Test Vectors**: `jamtestvectors/` submodule in the PBJ repo
 
 ---
 

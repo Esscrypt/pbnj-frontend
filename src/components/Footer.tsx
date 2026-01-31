@@ -22,6 +22,12 @@ export default function Footer() {
           >
             Tech
           </Link>
+          <Link
+            href="/get-in-touch"
+            className="rounded-lg px-2 py-1 font-medium transition-colors hover:bg-white/10 hover:text-white"
+          >
+            Get in touch
+          </Link>
           <a
             href="https://graypaper.com"
             target="_blank"
