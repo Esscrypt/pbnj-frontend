@@ -3,9 +3,9 @@ import Image from "next/image"
 export default function Home() {
   return (
     <>
-      <section className="flex min-h-[min(75vh,640px)] flex-col items-center gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:px-8">
+      <section className="flex min-h-[min(75vh,640px)] w-full max-w-full flex-col items-center gap-8 overflow-hidden lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:px-8">
         {/* Mobile: stacked, centered. Desktop: left column */}
-        <div className="flex min-h-[40vh] w-full shrink-0 items-center justify-center lg:min-h-0 lg:max-w-[50%] lg:justify-start">
+        <div className="flex min-h-[40vh] w-full min-w-0 shrink items-center justify-center lg:min-h-0 lg:max-w-[50%] lg:justify-start">
           <Image
             src="/logo.png"
             alt="Peanut Butter AND JAM"
@@ -17,14 +17,14 @@ export default function Home() {
           />
         </div>
         {/* Mobile: centered. Desktop: right column, text next to logo */}
-        <div className="flex w-full flex-col items-center justify-center px-4 py-10 text-center lg:max-w-[50%] lg:shrink-0 lg:px-12 lg:py-16 lg:text-center">
+        <div className="flex w-full min-w-0 flex-col items-center justify-center px-4 py-10 text-center lg:max-w-[50%] lg:shrink-0 lg:px-12 lg:py-16 lg:text-center">
           <h1 className="font-cartoony text-4xl font-bold tracking-tight text-[var(--pbj-brown)] drop-shadow-sm sm:text-5xl md:text-6xl">
-            The JAM protocol.
+            TypeScript JAM implementation
           </h1>
           <p className="mt-4 font-cartoony text-lg text-[var(--pbj-brown)]/90 sm:text-xl">
-            Join-Accumulate Machine — consensus, PVM, and tooling aligned with
-            the Gray Paper. Built to get the next layer of infrastructure
-            right.
+            Gray Paper–aligned JAM in TypeScript: type-safe consensus, PVM, and
+            tooling. Runs everywhere—Node, Bun, and the browser—so you can share
+            code with web apps and ship with confidence.
           </p>
         </div>
       </section>

@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     description: SHARE_DESCRIPTION,
     images: [
       {
-        url: "/logo.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Peanut Butter AND JAM",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     description: SHARE_DESCRIPTION,
     images: [
       {
-        url: "/logo.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Peanut Butter AND JAM",
@@ -90,8 +90,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
-      <body className="min-h-screen flex flex-col text-[#2d1f17] antialiased">
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className="min-h-screen flex flex-col overflow-x-hidden text-[#2d1f17] antialiased"
+        suppressHydrationWarning
+      >
         <StructuredData />
         <Header />
         <main className="flex-1">{children}</main>

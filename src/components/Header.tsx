@@ -29,12 +29,18 @@ export default function Header() {
             Tech
           </Link>
           <Link
-            href="https://github.com/gavofyork/graypaper"
+            href="https://graypaper.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-xl border-2 border-[var(--pbj-brown)] bg-[var(--pbj-red)] px-4 py-2 font-cartoony text-sm font-semibold text-white shadow-[var(--pbj-shadow)] transition-all hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--pbj-brown)] sm:text-base"
           >
             Gray Paper
+          </Link>
+          <Link
+            href="/getting-started"
+            className="rounded-xl border-2 border-[var(--pbj-brown)] bg-[var(--pbj-orange)] px-4 py-2 font-cartoony text-sm font-semibold text-[var(--pbj-brown)] shadow-[var(--pbj-shadow)] transition-all hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--pbj-brown)] sm:text-base"
+          >
+            Getting Started
           </Link>
         </nav>
       </div>
