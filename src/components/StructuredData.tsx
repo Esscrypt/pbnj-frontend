@@ -1,4 +1,6 @@
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://peanutbutterandjam.io"
+import { getSiteUrl } from "@/lib/site-url"
+
+const SITE_URL = getSiteUrl()
 
 export function StructuredData() {
   const organization = {

@@ -6,7 +6,9 @@ import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import { StructuredData } from "@/components/StructuredData"
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://peanutbutterandjam.io"
+import { getSiteUrl } from "@/lib/site-url"
+
+const SITE_URL = getSiteUrl()
 
 const SHARE_TITLE = "Peanut Butter AND JAM | JAM Protocol"
 const SHARE_DESCRIPTION =
