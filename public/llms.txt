@@ -1,0 +1,26 @@
+# Peanut Butter AND JAM (PBJ)
+
+## About
+Peanut Butter AND JAM is a JAM (Join-Accumulate Machine) protocol implementation. It provides Safrole consensus, a Gray Paper–compliant PVM (Para Virtual Machine), JAMNP-S networking, codec and types, erasure coding and assurance, and JIP-2 Node RPC tooling. Built by Esscrypt Ltd.
+
+## Site structure
+- `/` – Home: hero, tech direction (Safrole, PVM, JAMNP-S, codec, erasure/assurance, RPC)
+- `#tech` – Tech section on the home page
+
+## Links
+- Gray Paper: https://graypaper.com
+- Gray Paper repo: https://github.com/gavofyork/graypaper
+- JAM docs: https://docs.jamcha.in
+- Built by: https://esscrypt.com
+- M1 Fuzzer releases: https://github.com/Esscrypt/pbnj-fuzzer-releases/releases
+- M1 Milestone delivery: https://github.com/w3f/jam-milestone-delivery/pull/25
+
+## Tech summary
+- **Safrole**: Consensus (Gray Paper Section 3, safrole.tex). Ticket generation, sealing, epoch markers, fallback sealing.
+- **PVM**: Para Virtual Machine (pvm.tex). Host functions, instructions, RAM, refinement invocations.
+- **JAMNP-S**: JAM Simple Networking Protocol over QUIC and TLS 1.3. Block announcement, state/work requests, ticket distribution, work packages, audits.
+- **Codec & types**: Serialization and types (serialization.tex, definitions.tex). Blob/program decoding, extrinsic hashing.
+- **Erasure & assurance**: Erasure coding (erasure_coding.tex), reporting assurance (reporting_assurance.tex).
+- **RPC**: JIP-2 Node RPC server (Elysia), WebSocket subscriptions, node services (validators, guarantors, builders, networking).
+
+Implementation follows the Gray Paper as the authoritative spec; test vectors from jamtestvectors validate compliance.
