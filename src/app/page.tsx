@@ -1,11 +1,12 @@
 import Image from "next/image"
+import Link from "next/link"
 
 export default function Home() {
   return (
     <>
       <section className="flex min-h-[min(75vh,640px)] w-full max-w-full flex-col items-center gap-8 overflow-hidden lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:px-8">
-        {/* Mobile: stacked, centered. Desktop: left column */}
-        <div className="flex min-h-[40vh] w-full min-w-0 shrink items-center justify-center lg:min-h-0 lg:max-w-[50%] lg:justify-start">
+        {/* Mobile: stacked, centered. Desktop: left column — logo only */}
+        <div className="flex min-h-[40vh] w-full min-w-0 shrink flex-col items-center justify-center lg:min-h-0 lg:max-w-[50%] lg:justify-start">
           <Image
             src="/logo.png"
             alt="Peanut Butter AND JAM"
@@ -16,16 +17,24 @@ export default function Home() {
             unoptimized
           />
         </div>
-        {/* Mobile: centered. Desktop: right column, text next to logo */}
-        <div className="flex w-full min-w-0 flex-col items-center justify-center px-4 py-10 text-center lg:max-w-[50%] lg:shrink-0 lg:px-12 lg:py-16 lg:text-center">
+        {/* Mobile: centered. Desktop: right column — text + CTA below */}
+        <div className="flex w-full min-w-0 flex-col items-center justify-center px-4 py-10 text-center lg:max-w-[50%] lg:shrink-0 lg:items-center lg:px-12 lg:py-16">
           <h1 className="font-cartoony text-4xl font-bold tracking-tight text-[var(--pbj-brown)] drop-shadow-sm sm:text-5xl md:text-6xl">
-            TypeScript JAM implementation
+            Friendliest JAM implementation
           </h1>
           <p className="mt-4 font-cartoony text-lg text-[var(--pbj-brown)]/90 sm:text-xl">
-            Gray Paper–aligned JAM in TypeScript: type-safe consensus, PVM, and
-            tooling. Runs everywhere—Node, Bun, and the browser—so you can share
-            code with web apps and ship with confidence.
+            A welcoming, Gray Paper–aligned stack: type-safe consensus, PVM, and
+            tooling in TypeScript. Run on Node, Bun, or in the browser—one codebase,
+            shared with your apps, built to get you shipping.
           </p>
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/get-in-touch"
+              className="rounded-xl border-2 border-[var(--pbj-brown)] bg-[var(--pbj-purple)] px-5 py-2.5 font-cartoony text-base font-semibold text-white shadow-[var(--pbj-shadow)] transition-all hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--pbj-brown)] lg:px-8 lg:py-4 lg:text-xl"
+            >
+              Get in touch
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -34,44 +43,47 @@ export default function Home() {
         className="border-t-4 border-dashed border-[var(--pbj-brown)]/40 bg-white/50 py-12 sm:py-16"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="font-cartoony mb-10 text-center text-3xl font-bold text-[var(--pbj-brown)] sm:text-4xl">
-            Tech direction
+          <h2 className="font-cartoony mb-2 text-center text-3xl font-bold text-[var(--pbj-brown)] sm:text-4xl">
+            Why PBNJ
           </h2>
+          <p className="font-cartoony mb-10 text-center text-lg text-[var(--pbj-brown)]/80">
+            Gray Paper–aligned building blocks that are easy to integrate and verify.
+          </p>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <TechCard
               title="Safrole"
               color="yellow"
-              description="Consensus protocol as specified in Gray Paper Section 3 (safrole.tex). Ticket generation, sealing, epoch markers, and fallback sealing."
+              description="Battle-tested consensus: ticket generation, sealing, and epoch markers with fallback sealing so your chain keeps going when it matters."
             />
             <TechCard
               title="PVM"
               color="red"
-              description="Para Virtual Machine per pvm.tex. Gray Paper–compliant PVM with host functions, instructions, RAM, and refinement invocations."
+              description="Gray Paper–compliant PVM that runs the same everywhere—host functions, RAM, and refinement invocations with no spec surprises."
             />
             <TechCard
               title="JAMNP-S"
               color="purple"
-              description="JAM Simple Networking Protocol over QUIC and TLS 1.3. Block announcement, state/work requests, ticket distribution, work packages, and audits."
+              description="Modern networking over QUIC and TLS 1.3: block announcement, work packages, ticket distribution, and audits without the protocol headaches."
             />
             <TechCard
               title="Codec & types"
               color="orange"
-              description="Serialization and types aligned with Gray Paper (serialization.tex, definitions.tex). Blob/program decoding, extrinsic hashing, and shared type definitions."
+              description="One type system and serialization story: blob and program decoding, extrinsic hashing, and shared types that stay in sync with the spec."
             />
             <TechCard
               title="Erasure & assurance"
               color="brown"
-              description="Erasure coding (erasure_coding.tex) and reporting assurance (reporting_assurance.tex). Data availability and verification tooling."
+              description="Data availability you can verify: erasure coding and assurance tooling that match the Gray Paper so you can trust the data."
             />
             <TechCard
               title="RPC & tooling"
               color="cream"
-              description="JIP-2 Node RPC server (Elysia), WebSocket subscriptions, and node services: validators, guarantors, builders, networking."
+              description="Production-ready JIP-2 RPC, WebSocket subscriptions, and node services for validators, guarantors, and builders—integrate and go."
             />
           </div>
           <p className="mt-10 text-center font-medium text-[var(--pbj-brown)]/80">
-            Implementation follows the Gray Paper as the authoritative spec.
-            Test vectors from jamtestvectors validate compliance.
+            We follow the Gray Paper as the authoritative spec and prove it with
+            official jamtestvectors—so you get compliance without the guesswork.
           </p>
         </div>
       </section>

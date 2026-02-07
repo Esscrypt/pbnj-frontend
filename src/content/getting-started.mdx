@@ -1,83 +1,54 @@
 # Getting Started with Peanut Butter AND JAM
 
-This guide is based on the [Peanut Butter AND JAM](https://github.com/Esscrypt/pbnj) (PBJ) implementation of the JAM protocol. Read the [Gray Paper](https://graypaper.com/) for the authoritative specification.
+This guide is based on the [Peanut Butter AND JAM](https://github.com/Esscrypt/peanutbutterandjam) (PBNJ) implementation of the JAM protocol. Read the [Gray Paper](https://graypaper.com/) for the authoritative specification.
 
-**Note:** The PBJ source repository is currently **private** for the duration of the JAM contest. You do not need repo access to get started: use the **Docker image** or **pre-built binaries** from the links below. Source and build-from-source instructions will be available when the repo is public.
+The current release supports **GP 0.7.2**.
 
 ---
 
-## Running the Docker container
+# Usage
 
-Use the PBJ fuzzer-target Docker image to run the node in a container without building from source.
-
-### Prerequisites
-
-- **Docker** installed and running ([Install Docker](https://docs.docker.com/get-docker/))
-- A writable directory for the Unix socket (e.g. `/tmp`)
-
-### Pull and run
+## Docker
 
 ```bash
-# Pull the image
+# Pull the image (Docker Hub)
 docker pull shimonchick/pbnjam-fuzzer-target:latest
 
-# Run with a test socket (mount /tmp so the socket can be shared)
-docker run --rm -v /tmp:/tmp shimonchick/pbnjam-fuzzer-target:latest --socket /tmp/jam_test.sock --spec tiny
-```
-
-You should see the target listening on the socket. Press `Ctrl+C` to stop.
-
-### Custom socket path
-
-```bash
-SOCKET_PATH="/tmp/my_socket.sock"
-
+# Run a test
 docker run --rm \
   -v /tmp:/tmp \
-  shimonchick/pbnjam-fuzzer-target:latest \
-  bun run infra/node/fuzzer-target.ts --socket "$SOCKET_PATH" --spec tiny
+  pbnjam-fuzzer-target:latest \
+  --socket /tmp/jam_target.sock
 ```
 
-### Parameters
-
-- **`--socket <path>`**: Unix domain socket path for fuzzer communication
-- **`--spec tiny`**: Chain specification (`tiny` or `full`)
-- **`-v /tmp:/tmp`**: Mounts the host directory so the socket is shared; use a path that exists on your machine
-
-### Troubleshooting
-
-- **Image not found**: Run `docker pull shimonchick/pbnjam-fuzzer-target:latest`. (Building from source requires access to the PBJ repo, which is currently private.)
-- **Socket permission errors**: Run with your user: `docker run --rm -v /tmp:/tmp --user $(id -u):$(id -g) shimonchick/pbnjam-fuzzer-target:latest ...`
-
----
-
-## Download and run the binary
-
-Pre-built **fuzzer target** binaries are published on GitHub Releases. **Linux (x64) only** for now.
-
-Releases: [https://github.com/Esscrypt/pbnj-fuzzer-releases/releases](https://github.com/Esscrypt/pbnj-fuzzer-releases/releases)
-
-### Prerequisites
-
-- **Linux (x64)** (macOS/Windows binaries may be added later)
-- **gunzip** (standard on Linux)
-
-### Run the fuzzer target
-
-1. Download `fuzzer-target.gz` from the [latest release](https://github.com/Esscrypt/pbnj-fuzzer-releases/releases).
-2. Decompress, make executable, and run:
+## Binary (Linux only)
 
 ```bash
-gunzip -c fuzzer-target.gz > fuzzer-target && chmod +x fuzzer-target && ./fuzzer-target --socket /tmp/jam_target.sock --spec tiny
+TAG=$(curl -sL "https://api.github.com/repos/Esscrypt/pbnj-fuzzer-releases/releases?per_page=1" | grep '"tag_name"' | head -1 | sed 's/.*"tag_name": "\([^"]*\)".*/\1/')
+echo "Latest tag: $TAG"
+
+curl -sL -o fuzzer-target-bin.tar.gz \
+  "https://github.com/Esscrypt/pbnj-fuzzer-releases/releases/download/${TAG}/fuzzer-target-bin.tar.gz"
+tar xzvf fuzzer-target-bin.tar.gz
+./fuzzer-target --socket /tmp/jam_target.sock --spec tiny
 ```
 
-Use your own socket path and `--spec tiny` or `--spec full` as needed. The target will listen on the socket until you stop it (`Ctrl+C`).
+## Running directly
+
+```bash
+git clone https://github.com/Esscrypt/peanutbutterandjam
+cd peanutbutterandjam
+bun i && bun run build
+bun run infra/node/fuzzer-target.ts --socket /tmp/jam_target.sock --spec tiny
+```
 
 ---
 
 ## Key Resources
 
-When the PBJ repo is public, it will include test vectors for Safrole, PVM, erasure coding, and codec, plus build and run-from-source instructions. Until then, use Docker or the binaries above.
+The PBNJ repo includes test vectors for Safrole, PVM, erasure coding, and codec, plus the build and run-from-source instructions above. Pre-built fuzzer target binaries are also available.
+
+- **Releases (binaries)**: [https://github.com/Esscrypt/pbnj-fuzzer-releases/releases](https://github.com/Esscrypt/pbnj-fuzzer-releases/releases)
 
 ---
 

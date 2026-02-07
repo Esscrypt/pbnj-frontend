@@ -42,12 +42,6 @@ export default function Header() {
           >
             Getting Started
           </Link>
-          <Link
-            href="/get-in-touch"
-            className="rounded-xl border-2 border-[var(--pbj-brown)] bg-[var(--pbj-purple)] px-4 py-2 font-cartoony text-sm font-semibold text-white shadow-[var(--pbj-shadow)] transition-all hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--pbj-brown)] sm:text-base"
-          >
-            Get in touch
-          </Link>
         </nav>
       </div>
     </header>
